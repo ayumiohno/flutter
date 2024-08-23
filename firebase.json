@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"mercari-bold","appId":"1:860621310184:android:9129bbf007e5de1390a15d","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"mercari-bold","configurations":{"android":"1:860621310184:android:9129bbf007e5de1390a15d","ios":"1:860621310184:ios:04467bb32256668390a15d"}}}}}}
