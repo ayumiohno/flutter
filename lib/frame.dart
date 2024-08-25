@@ -9,7 +9,7 @@ class ShareFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double containerPadding = constraints.maxWidth * 0.05;
+        double containerPadding = constraints.maxWidth * 0.1;
         return Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black, width: 1),
@@ -22,7 +22,12 @@ class ShareFrame extends StatelessWidget {
               Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(containerPadding),
+                    padding: EdgeInsets.only(
+                      left: containerPadding,
+                      right: containerPadding,
+                      top: containerPadding,
+                      bottom: containerPadding * 0.67
+                    ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(2),
                       child: image,
@@ -50,9 +55,9 @@ class ShareFrame extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.only(
-                  left: containerPadding * 0.5,
-                  right: containerPadding * 0.5,
-                  bottom: containerPadding,
+                  left: containerPadding * 0.67,
+                  right: containerPadding * 0.67,
+                  bottom: containerPadding * 0.67,
                 ),
                 child: ProductInfo(),
               )

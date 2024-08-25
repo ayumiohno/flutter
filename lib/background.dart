@@ -21,11 +21,11 @@ class Background extends StatelessWidget {
                 )),
             Positioned(
               top: constraints.maxHeight * 0.15,
-              left: constraints.maxWidth * 0.1,
+              left: constraints.maxWidth * 0.08,
               child: Transform.rotate(
                 angle: -0.174533, // -10 degrees in radians
                 child: Container(
-                  width: constraints.maxWidth * 0.8,
+                  width: constraints.maxWidth * 0.83,
                   child: frame,
                 ),
               ),

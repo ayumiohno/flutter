@@ -5,15 +5,14 @@ class ProductInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double containerPadding = constraints.maxWidth * 0.05;
+        double containerPadding = constraints.maxWidth * 0.1;
         return Row(
           children: [
             Stack(children: [
               Padding(
                 padding: EdgeInsets.only(
-                  left: containerPadding * 0.5,
-                  right: containerPadding * 0.5,
-                  bottom: containerPadding,
+                  left: containerPadding * 0.33,
+                  bottom: containerPadding * 0.33,
                 ),
                 child: Image.asset(
                   'assets/product.png',
@@ -27,11 +26,11 @@ class ProductInfo extends StatelessWidget {
                   left: 0,
                   child: Image.asset(
                     'assets/logo.png',
-                    width: constraints.maxWidth * 0.1,
-                    height: constraints.maxWidth * 0.1,
+                    width: 32,
+                    height: 32,
                   )),
             ]),
-            SizedBox(width: containerPadding),
+            SizedBox(width: containerPadding * 0.67),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
