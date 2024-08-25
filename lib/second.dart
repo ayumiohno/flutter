@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:flutter/services.dart';
 import 'package:new_flutter/frame.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:new_flutter/background.dart';
 
 class SecondPage extends StatefulWidget {
   const SecondPage({
@@ -24,7 +24,7 @@ class _SecondPageState extends State<SecondPage> {
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            shareFrame,
+            Background(shareFrame),
             // Download button
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.033,
