@@ -42,7 +42,9 @@ class _SecondPageState extends State<SecondPage> {
                 child: Row(
                   children: [
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        _downloadWidget();
+                      },
                       icon: Icon(Icons.download, color: Colors.black),
                       label: Text('Download',
                           style: TextStyle(color: Colors.black)),
@@ -105,6 +107,18 @@ class _SecondPageState extends State<SecondPage> {
           ],
           text: 'Check out this cool app!',
         );
+      }
+    });
+  }
+
+  void _downloadWidget() {
+    screenshotController
+        .captureFromWidget(
+      shareFrame,
+    )
+        .then((image) {
+      if (image != null) {
+        final buffer = image.buffer;
       }
     });
   }
