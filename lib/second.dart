@@ -20,60 +20,92 @@ class _SecondPageState extends State<SecondPage> {
   );
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            Background(shareFrame),
-            // Download button
-            Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.033,
-              left: MediaQuery.of(context).size.width * 0.05,
-              right: MediaQuery.of(context).size.width * 0.5,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Text('Download'),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+          ),
+          body: Column(
+            children: [
+              Container(
+                height: constraints.maxHeight * 0.74,
+                child: Background(shareFrame),
               ),
-            ),
-            // Share button
-            Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.033,
-              right: MediaQuery.of(context).size.width * 0.05,
-              child: ElevatedButton(
-                onPressed: () async {
-                  // Share.share('Check out this cool app!');
-                  screenshotController
-                      .captureFromWidget(
-                    shareFrame,
-                  )
-                      .then((image) {
-                    // Handle captured image
-                    if (image != null) {
-                      final buffer = image.buffer;
-                      Share.shareXFiles(
-                        [
-                          XFile.fromData(
-                            buffer.asUint8List(
-                              image.offsetInBytes,
-                              image.lengthInBytes,
-                            ),
-                            name: 'Photo.png',
-                            mimeType: 'image/png',
-                          ),
-                        ],
-                        text: 'Check out this cool app!',
-                      );
-                    }
-                  });
-                },
-                child: Text('Share'),
+              Container(
+                padding: EdgeInsets.only(
+                  left: constraints.maxWidth * 0.04,
+                  right: constraints.maxWidth * 0.04,
+                  top: constraints.maxHeight * 0.038,
+                  bottom: constraints.maxHeight * 0.038,
+                ),
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.download, color: Colors.black),
+                      label: Text('Download',
+                          style: TextStyle(color: Colors.black)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        side: BorderSide(color: Colors.grey),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)),
+                        minimumSize: Size(constraints.maxWidth * 0.30,
+                            constraints.maxHeight * 0.05),
+                      ),
+                    ),
+                    SizedBox(width: constraints.maxWidth * 0.04),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        _shareWidget();
+                      },
+                      icon: Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      ),
+                      label:
+                          Text('Share', style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF5E6DF2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        minimumSize: Size(constraints.maxWidth * 0.55,
+                            constraints.maxHeight * 0.05),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+              // ),
+            ],
+          ));
+    });
+  }
+
+  void _shareWidget() {
+    screenshotController
+        .captureFromWidget(
+      shareFrame,
+    )
+        .then((image) {
+      if (image != null) {
+        final buffer = image.buffer;
+        Share.shareXFiles(
+          [
+            XFile.fromData(
+              buffer.asUint8List(
+                image.offsetInBytes,
+                image.lengthInBytes,
+              ),
+              name: 'Photo.png',
+              mimeType: 'image/png',
             ),
           ],
-        ),
-      ),
-    );
+          text: 'Check out this cool app!',
+        );
+      }
+    });
   }
 }
