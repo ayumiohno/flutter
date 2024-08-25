@@ -15,7 +15,9 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   final ScreenshotController screenshotController = ScreenshotController();
-  final Widget shareFrame = ShareFrame();
+  final Widget shareFrame = ShareFrame(
+    Image.asset('assets/image.png'),
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(

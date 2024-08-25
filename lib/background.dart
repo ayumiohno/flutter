@@ -19,19 +19,14 @@ class Background extends StatelessWidget {
                   height: constraints.maxWidth * 0.25,
                   fit: BoxFit.cover,
                 )),
-            // frame,
             Positioned(
-              top: constraints.maxHeight * 0.1,
-              left: constraints.maxWidth * 0.05,
+              top: constraints.maxHeight * 0.15,
+              left: constraints.maxWidth * 0.1,
               child: Transform.rotate(
                 angle: -0.174533, // -10 degrees in radians
-                child: Transform.scale(
-                  scale: 0.9,
-                  child: Container(
-                    width: constraints.maxWidth,
-                    height: constraints.maxHeight,
-                    child: frame,
-                  ),
+                child: Container(
+                  width: constraints.maxWidth * 0.8,
+                  child: frame,
                 ),
               ),
             ),
