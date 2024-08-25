@@ -13,14 +13,21 @@ import 'package:new_flutter/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // ダミーのCameraDescriptionオブジェクトを作成
-    final camera = CameraDescription(
-      name: 'TestCamera',
-      lensDirection: CameraLensDirection.back,
-      sensorOrientation: 0,
-    );
+    final cameras = <CameraDescription>[
+      CameraDescription(
+        name: 'TestCamera',
+        lensDirection: CameraLensDirection.back,
+        sensorOrientation: 0,
+      ),
+    ];
 
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(camera: camera));
+    final firstCamera = cameras.first;
+
+    // Build our app and trigger a frame.>
+    await tester.pumpWidget(MyApp(
+      cameras: cameras,
+      initialCamera: firstCamera,
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
