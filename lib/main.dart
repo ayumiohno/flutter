@@ -1,82 +1,117 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:new_flutter/second.dart';
+import 'dart:io';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  // main 関数内で非同期処理を呼び出すための設定
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // デバイスで使用可能なカメラのリストを取得
+  final cameras = await availableCameras();
+
+  // 利用可能なカメラのリストから特定のカメラを取得
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(camera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.camera});
+
+  final CameraDescription camera;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Camera App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CameraScreen(camera: camera),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class CameraScreen extends StatefulWidget {
+  const CameraScreen({super.key, required this.camera});
 
-  final String title;
+  final CameraDescription camera;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CameraScreen> createState() => _CameraScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _CameraScreenState extends State<CameraScreen> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = CameraController(
+      widget.camera,
+      ResolutionPreset.medium,
+    );
+
+    _initializeControllerFuture = _controller.initialize();
   }
 
-  // 新しい画面に遷移するメソッド
-  void _navigateToNextPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SecondPage()),
-    );
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('Camera Preview'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            ElevatedButton(
-              onPressed: _navigateToNextPage,
-              child: const Text('Go to Second Page'),
-            ),
-          ],
+        child: FutureBuilder<void>(
+          future: _initializeControllerFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return CameraPreview(_controller);
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        onPressed: () async {
+          // 写真を撮る
+          final image = await _controller.takePicture();
+
+          // 撮影した写真を表示する画面に遷移
+          await Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DisplayPictureScreen(imagePath: image.path),
+            ),
+          );
+        },
+        tooltip: 'Take a Picture',
+        child: const Icon(Icons.camera_alt),
       ),
+    );
+  }
+}
+
+// 撮影した写真を表示する画面
+class DisplayPictureScreen extends StatelessWidget {
+  const DisplayPictureScreen({super.key, required this.imagePath});
+
+  final String imagePath;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Captured Picture')),
+      body: Center(child: Image.file(File(imagePath))),
     );
   }
 }
