@@ -49,15 +49,37 @@ class ProductInfo extends StatelessWidget {
                 Text(
                   'Product Name',
                   style: TextStyle(
-                    fontSize: constraints.maxWidth * 0.05,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      "\$ 20.00",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF5E6DF2),
+                      ),
+                    ),
+                    SizedBox(width: 6),
+                    Text(
+                      'Sold out',
+                      style: TextStyle(
+                        fontSize: 8,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
                 Text(
                   formatted,
                   style: TextStyle(
-                    fontSize: constraints.maxWidth * 0.04,
+                    fontSize: 12,
                     color: Colors.grey,
                   ),
                 ),
