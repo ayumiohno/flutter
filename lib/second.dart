@@ -58,6 +58,7 @@ class _SecondPageState extends State<SecondPage> {
                       label: Text('Download',
                           style: TextStyle(color: Colors.black)),
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         backgroundColor: Colors.white,
                         side: BorderSide(color: Colors.grey),
                         shape: RoundedRectangleBorder(
@@ -78,11 +79,12 @@ class _SecondPageState extends State<SecondPage> {
                       label:
                           Text('Share', style: TextStyle(color: Colors.white)),
                       style: ElevatedButton.styleFrom(
+                        elevation: 0,
                         backgroundColor: Color(0xFF5E6DF2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        minimumSize: Size(constraints.maxWidth * 0.55,
+                        minimumSize: Size(constraints.maxWidth * 0.50,
                             constraints.maxHeight * 0.05),
                       ),
                     ),
