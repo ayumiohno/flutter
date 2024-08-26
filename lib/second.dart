@@ -34,6 +34,7 @@ class _SecondPageState extends State<SecondPage> {
           appBar: AppBar(
             backgroundColor: Colors.white,
           ),
+          backgroundColor: Colors.white,
           body: Column(
             children: [
               Container(
