@@ -33,6 +33,8 @@ class _SecondPageState extends State<SecondPage> {
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
+            leading: Icon(Icons.arrow_back_ios),
+            title: const Text('Share'),
           ),
           backgroundColor: Colors.white,
           body: Column(
