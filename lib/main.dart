@@ -137,7 +137,9 @@ class _CameraScreenState extends State<CameraScreen> {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 130.0),
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.05,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -147,11 +149,11 @@ class _CameraScreenState extends State<CameraScreen> {
                             ? Icons.flash_off
                             : Icons.flash_on,
                         color: Colors.black,
-                        size: 45.0,
+                        size: MediaQuery.of(context).size.width * 0.1,
                       ),
                       onPressed: _toggleFlashMode,
                     ),
-                    const SizedBox(width: 40.0),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.1),
                     ShutterButton(
                       onPressed: () async {
                         // 写真を撮る
@@ -171,7 +173,7 @@ class _CameraScreenState extends State<CameraScreen> {
                         // );
                       },
                     ),
-                    const SizedBox(width: 40.0),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.1),
                     IconButton(
                       icon: const Icon(
                         Icons.flip_camera_android_rounded,

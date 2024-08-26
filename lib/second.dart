@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_flutter/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:new_flutter/frame.dart';
 import 'package:screenshot/screenshot.dart';
@@ -33,7 +34,12 @@ class _SecondPageState extends State<SecondPage> {
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            leading: Icon(Icons.arrow_back_ios),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             title: const Text('Share'),
           ),
           backgroundColor: Colors.white,
@@ -45,8 +51,10 @@ class _SecondPageState extends State<SecondPage> {
               ),
               Container(
                 padding: EdgeInsets.only(
-                  left: constraints.maxWidth * 0.04,
-                  right: constraints.maxWidth * 0.04,
+                  // left: constraints.maxWidth * 0.04,
+                  // right: constraints.maxWidth * 0.04,
+                  left: 16,
+                  right: 16,
                   top: constraints.maxHeight * 0.038,
                   bottom: constraints.maxHeight * 0.038,
                 ),
