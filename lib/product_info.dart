@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import "package:intl/intl.dart";
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/standalone.dart' as tz;
 
 class ProductInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    tz.initializeTimeZones();
+
+    final pacificTimeZone = tz.getLocation('America/Los_Angeles');
+    DateTime utcTime = DateTime.now().toUtc();
+    DateTime pacificTime = tz.TZDateTime.from(utcTime, pacificTimeZone);
+    var formatter = DateFormat('MM.dd.yyyy hh:mm a', "en_US");
+    var formatted = formatter.format(pacificTime);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         double containerPadding = constraints.maxWidth * 0.1;
@@ -44,7 +55,7 @@ class ProductInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '26.08.2024',
+                  formatted,
                   style: TextStyle(
                     fontSize: constraints.maxWidth * 0.04,
                     color: Colors.grey,
