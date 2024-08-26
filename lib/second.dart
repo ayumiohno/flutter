@@ -3,10 +3,14 @@ import 'package:share_plus/share_plus.dart';
 import 'package:new_flutter/frame.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:new_flutter/background.dart';
+import 'package:cross_file_image/cross_file_image.dart';
 
 class SecondPage extends StatefulWidget {
+  final XFile? image; //上位Widgetから受け取りたいデータ
+
   const SecondPage({
     super.key,
+    required this.image,
   });
 
   @override
@@ -15,11 +19,16 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   final ScreenshotController screenshotController = ScreenshotController();
-  final Widget shareFrame = ShareFrame(
+  Widget shareFrame = ShareFrame(
     Image.asset('assets/image.png'),
   );
   @override
   Widget build(BuildContext context) {
+    if (widget.image != null) {
+      shareFrame = ShareFrame(
+        Image(image: XFileImage(widget.image as XFile)),
+      );
+    }
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
           appBar: AppBar(

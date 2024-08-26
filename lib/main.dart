@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import 'package:new_flutter/second.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -155,14 +156,19 @@ class _CameraScreenState extends State<CameraScreen> {
                       onPressed: () async {
                         // 写真を撮る
                         final image = await _controller.takePicture();
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SecondPage(image: image)),
+                        );
 
                         // 撮影した写真を表示する画面に遷移
-                        await Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DisplayPictureScreen(imagePath: image.path),
-                          ),
-                        );
+                        // await Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) =>
+                        //         DisplayPictureScreen(imagePath: image.path),
+                        //   ),
+                        // );
                       },
                     ),
                     const SizedBox(width: 40.0),
