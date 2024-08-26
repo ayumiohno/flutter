@@ -23,15 +23,19 @@ class ShareFrame extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      left: containerPadding,
-                      right: containerPadding,
-                      top: containerPadding,
-                      bottom: containerPadding * 0.67
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(2),
-                      child: image,
-                    ),
+                        left: containerPadding,
+                        right: containerPadding,
+                        top: containerPadding,
+                        bottom: containerPadding * 0.67),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(2),
+                          child: image,
+                        )),
                   ),
                   Positioned(
                     top: containerPadding * 0,
