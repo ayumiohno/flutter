@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       home: CameraScreen(cameras: cameras, initialCamera: initialCamera),
     );
   }
@@ -138,7 +139,7 @@ class _CameraScreenState extends State<CameraScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).size.height * 0.05,
+                  bottom: MediaQuery.of(context).size.height * 0.1,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

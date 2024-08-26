@@ -50,13 +50,9 @@ class _SecondPageState extends State<SecondPage> {
                 child: Background(shareFrame),
               ),
               Container(
-                padding: EdgeInsets.only(
-                  // left: constraints.maxWidth * 0.04,
-                  // right: constraints.maxWidth * 0.04,
-                  left: 16,
-                  right: 16,
-                  top: constraints.maxHeight * 0.038,
-                  bottom: constraints.maxHeight * 0.038,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 32.0,
                 ),
                 color: Colors.white,
                 child: Row(
@@ -95,7 +91,7 @@ class _SecondPageState extends State<SecondPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        minimumSize: Size(constraints.maxWidth * 0.50,
+                        minimumSize: Size(constraints.maxWidth * 0.51,
                             constraints.maxHeight * 0.05),
                       ),
                     ),
