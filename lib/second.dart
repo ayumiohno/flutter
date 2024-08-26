@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:new_flutter/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:new_flutter/frame.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:new_flutter/background.dart';
 import 'package:cross_file_image/cross_file_image.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SecondPage extends StatefulWidget {
   final XFile? image; //上位Widgetから受け取りたいデータ
@@ -23,14 +24,22 @@ class _SecondPageState extends State<SecondPage> {
   Widget shareFrame = ShareFrame(
     Image.asset('assets/image.png'),
   );
+  String pose = 'hello';
+
+  @override
+  void initState() {
+    super.initState();
+    _sendRequest(widget.image as XFile);
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (widget.image != null) {
-      shareFrame = ShareFrame(
-        Image(image: XFileImage(widget.image as XFile)),
-      );
-    }
     return LayoutBuilder(builder: (context, constraints) {
+      if (widget.image != null) {
+        shareFrame = ShareFrame(
+          Image(image: XFileImage(widget.image as XFile)),
+        );
+      }
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -66,8 +75,7 @@ class _SecondPageState extends State<SecondPage> {
                         _downloadWidget();
                       },
                       icon: Icon(Icons.download, color: Colors.black),
-                      label: Text('Download',
-                          style: TextStyle(color: Colors.black)),
+                      label: Text(pose, style: TextStyle(color: Colors.black)),
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor: Colors.white,
@@ -143,5 +151,25 @@ class _SecondPageState extends State<SecondPage> {
         final buffer = image.buffer;
       }
     });
+  }
+
+  Future<void> _sendRequest(XFile file) async {
+    final uri = Uri.parse('http://18.209.231.104:8000/predict');
+    final request = http.MultipartRequest('POST', uri)
+      ..headers['content-type'] = 'multipart/form-data'
+      ..headers['upgrade-insecure-requests'] = '1'
+      ..fields['Content-Disposition'] =
+          'form-data; name="file"; filename="good.jpg"'
+      ..files.add(await http.MultipartFile.fromPath('file', file.path));
+    final response = await http.Response.fromStream(await request.send());
+    if (response.statusCode == 200) {
+      debugPrint('Response: ${response.body}');
+      final responseData = json.decode(response.body);
+      setState(() {
+        pose = responseData['message'];
+      });
+    } else {
+      debugPrint('Error: ${response.reasonPhrase}');
+    }
   }
 }
