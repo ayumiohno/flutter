@@ -181,14 +181,19 @@ class _CameraScreenState extends State<CameraScreen> {
             Positioned(
               bottom: 250.0,
               right: 20.0,
-              child: Switch(
-                value: _isZoomed,
-                onChanged: (value) {
-                  _toggleZoom();
-                },
-                activeColor: Color(0xFF5E6DF2),
-                inactiveTrackColor: Colors.white,
-                inactiveThumbColor: Colors.black,
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Columnのサイズを内容に合わせる
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      _isZoomed ? Icons.zoom_out : Icons.zoom_in,
+                      color: Colors.black,
+                    ),
+                    onPressed: _toggleZoom,
+                    iconSize: 40.0,
+                    tooltip: _isZoomed ? "Zoom Out" : "Zoom In",
+                  ),
+                ],
               ),
             ),
           ],
