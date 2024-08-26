@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Background extends StatelessWidget {
+class NormalBackground extends StatelessWidget {
   @override
   final Widget frame;
-  Background(this.frame);
+  NormalBackground(this.frame);
 
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
