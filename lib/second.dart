@@ -11,15 +11,15 @@ import 'package:new_flutter/background.dart';
 import 'package:new_flutter/background_good.dart';
 
 import 'package:cross_file_image/cross_file_image.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class SecondPage extends StatefulWidget {
   final XFile? image; //上位Widgetから受け取りたいデータ
+  final String pose;
 
   const SecondPage({
     super.key,
     required this.image,
+    required this.pose,
   });
 
   @override
@@ -31,18 +31,22 @@ class _SecondPageState extends State<SecondPage> {
   Widget frame = NormalFrame(
     Image.asset('assets/image.png'),
   );
-  Widget background =
-      NormalBackground(NormalFrame(Image.asset('assets/image.png')));
-  String pose = '';
+  Widget background = NormalBackground(NormalFrame(Image.asset('assets/image.png')));
 
   @override
   void initState() {
     super.initState();
-    frame = NormalFrame(
-      Image(image: XFileImage(widget.image as XFile)),
-    );
-    background = NormalBackground(frame);
-    _sendRequest(widget.image as XFile);
+    if (widget.pose == 'thumbs up') {
+      frame = FrameForThumbsUp(
+        Image(image: XFileImage(widget.image as XFile)),
+      );
+      background = BackgroundForThumbsUp(frame);
+    } else {
+      frame = NormalFrame(
+        Image(image: XFileImage(widget.image as XFile)),
+      );
+      background = NormalBackground(frame);
+    }
   }
 
   @override
@@ -79,7 +83,7 @@ class _SecondPageState extends State<SecondPage> {
                         _downloadWidget();
                       },
                       icon: Icon(Icons.download, color: Colors.black),
-                      label: Text(pose, style: TextStyle(color: Colors.black)),
+                      label: Text(widget.pose, style: TextStyle(color: Colors.black)),
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor: Colors.white,
@@ -155,37 +159,5 @@ class _SecondPageState extends State<SecondPage> {
         final buffer = image.buffer;
       }
     });
-  }
-
-  Future<void> _sendRequest(XFile file) async {
-    final uri = Uri.parse('http://18.209.231.104:8000/predict');
-    final request = http.MultipartRequest('POST', uri)
-      ..headers['content-type'] = 'multipart/form-data'
-      ..headers['upgrade-insecure-requests'] = '1'
-      ..fields['Content-Disposition'] =
-          'form-data; name="file"; filename="good.jpg"'
-      ..files.add(await http.MultipartFile.fromPath('file', file.path));
-    final response = await http.Response.fromStream(await request.send());
-    if (response.statusCode == 200) {
-      debugPrint('Response: ${response.body}');
-      final responseData = json.decode(response.body);
-      setState(() {
-        pose = responseData['message'];
-        // TODO: Frameをposeに応じて変更
-        if (pose == 'thumbs up') {
-          frame = FrameForThumbsUp(
-            Image(image: XFileImage(widget.image as XFile)),
-          );
-          background = BackgroundForThumbsUp(frame);
-        } else if (pose == "shoulder") {
-          frame = FrameForShoulder(
-            Image(image: XFileImage(widget.image as XFile)),
-          );
-          background = BackgroundForShoulder(frame);
-        }
-      });
-    } else {
-      debugPrint('Error: ${response.reasonPhrase}');
-    }
   }
 }
