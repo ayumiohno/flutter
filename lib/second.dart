@@ -104,7 +104,7 @@ class _SecondPageState extends State<SecondPage> {
                     SizedBox(width: constraints.maxWidth * 0.04),
                     ElevatedButton.icon(
                       onPressed: () {
-                        _shareWidget();
+                        _shareWidget(constraints);
                       },
                       icon: Icon(
                         Icons.send,
@@ -131,10 +131,13 @@ class _SecondPageState extends State<SecondPage> {
     });
   }
 
-  void _shareWidget() {
+  void _shareWidget(constraints) {
     screenshotController
         .captureFromWidget(
-      frame,
+      Container(
+        height: constraints.maxHeight * 0.74,
+        child: background,
+      ),
     )
         .then((image) {
       if (image != null) {
