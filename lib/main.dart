@@ -131,7 +131,10 @@ class _CameraScreenState extends State<CameraScreen> {
               future: _initializeControllerFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return CameraPreview(_controller);
+                  final size = MediaQuery.of(context).size;
+                  final deviceRatio = size.width / size.height;
+                  return AspectRatio(
+                      aspectRatio: 3 / 4, child: CameraPreview(_controller));
                 } else {
                   return const CircularProgressIndicator();
                 }
