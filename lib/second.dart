@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:new_flutter/frame.dart';
+
+import 'package:new_flutter/frame3.dart';
+import 'package:new_flutter/background3.dart';
+
 import 'package:new_flutter/frame_good.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:new_flutter/background.dart';
 import 'package:new_flutter/background_good.dart';
+
 import 'package:cross_file_image/cross_file_image.dart';
 
 class SecondPage extends StatefulWidget {
@@ -106,7 +111,7 @@ class _SecondPageState extends State<SecondPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        minimumSize: Size(constraints.maxWidth * 0.51,
+                        minimumSize: Size(constraints.maxWidth * 0.52,
                             constraints.maxHeight * 0.05),
                       ),
                     ),
