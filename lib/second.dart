@@ -31,7 +31,8 @@ class _SecondPageState extends State<SecondPage> {
   Widget frame = NormalFrame(
     Image.asset('assets/image.png'),
   );
-  Widget background = NormalBackground(NormalFrame(Image.asset('assets/image.png')));
+  Widget background =
+      NormalBackground(NormalFrame(Image.asset('assets/image.png')));
   String pose = '';
 
   @override
@@ -176,6 +177,11 @@ class _SecondPageState extends State<SecondPage> {
             Image(image: XFileImage(widget.image as XFile)),
           );
           background = BackgroundForThumbsUp(frame);
+        } else if (pose == "shoulder") {
+          frame = FrameForShoulder(
+            Image(image: XFileImage(widget.image as XFile)),
+          );
+          background = BackgroundForShoulder(frame);
         }
       });
     } else {

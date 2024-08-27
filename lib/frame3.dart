@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_flutter/product_info.dart';
 
-class ShareFrame extends StatelessWidget {
+class FrameForShoulder extends StatelessWidget {
   @override
   final Widget image;
-  ShareFrame(this.image);
+  FrameForShoulder(this.image);
 
   Widget build(BuildContext context) {
     return LayoutBuilder(
