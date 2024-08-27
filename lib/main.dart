@@ -121,7 +121,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back_ios),
+        leading: Icon(Icons.arrow_back),
         title: const Text('Camera Preview'),
       ),
       body: Center(

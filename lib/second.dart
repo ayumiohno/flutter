@@ -31,7 +31,8 @@ class _SecondPageState extends State<SecondPage> {
   Widget frame = NormalFrame(
     Image.asset('assets/image.png'),
   );
-  Widget background = NormalBackground(NormalFrame(Image.asset('assets/image.png')));
+  Widget background =
+      NormalBackground(NormalFrame(Image.asset('assets/image.png')));
 
   @override
   void initState() {
@@ -41,6 +42,11 @@ class _SecondPageState extends State<SecondPage> {
         Image(image: XFileImage(widget.image as XFile)),
       );
       background = BackgroundForThumbsUp(frame);
+    } else if (widget.pose == 'shoulder') {
+      frame = FrameForShoulder(
+        Image(image: XFileImage(widget.image as XFile)),
+      );
+      background = BackgroundForShoulder(frame);
     } else {
       frame = NormalFrame(
         Image(image: XFileImage(widget.image as XFile)),
@@ -56,7 +62,7 @@ class _SecondPageState extends State<SecondPage> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -83,7 +89,8 @@ class _SecondPageState extends State<SecondPage> {
                         _downloadWidget();
                       },
                       icon: Icon(Icons.download, color: Colors.black),
-                      label: Text(widget.pose, style: TextStyle(color: Colors.black)),
+                      label: Text('DownLoad',
+                          style: TextStyle(color: Colors.black)),
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         backgroundColor: Colors.white,
@@ -111,7 +118,7 @@ class _SecondPageState extends State<SecondPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        minimumSize: Size(constraints.maxWidth * 0.52,
+                        minimumSize: Size(constraints.maxWidth * 0.501,
                             constraints.maxHeight * 0.05),
                       ),
                     ),
