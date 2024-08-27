@@ -10,14 +10,18 @@ class NormalBackground extends StatelessWidget {
       final linesX = 17;
       double gridSpace = constraints.maxWidth / linesX;
       final linesY = (constraints.maxHeight / gridSpace).round();
-      var h =Container(width: 1.61, height: constraints.maxHeight, color: Colors.white);
-      var v =Container(width: constraints.maxWidth, height: 1.61, color: Colors.white);
+      var h = Container(
+          width: 1.61, height: constraints.maxHeight, color: Colors.white);
+      var v = Container(
+          width: constraints.maxWidth, height: 1.61, color: Colors.white);
       return Container(
         color: Color(0xFFF2F3FE),
         child: Stack(
           children: [
-            ...List.generate(linesX, (index) => Positioned(left: index * gridSpace, child: h)),
-            ...List.generate(linesY, (index) => Positioned(top: index * gridSpace, child: v)),
+            ...List.generate(linesX,
+                (index) => Positioned(left: index * gridSpace, child: h)),
+            ...List.generate(linesY,
+                (index) => Positioned(top: index * gridSpace, child: v)),
             Positioned(
                 top: 10,
                 right: 5,

@@ -83,11 +83,19 @@ flutter:
      - assets/logo.png
      - assets/star.png
      - assets/path.png
+
+     - assets/icon3-1.png
+     - assets/icon3-2.png
+     - assets/icon3-3.png
+     - assets/icon3-4.png
+     
+
      - assets/thumes_up_icon.png
      - assets/thumes_up_character.png
      - assets/family_character.png
      - assets/star_blue.png
      - assets/path_for_thumes_up.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
