@@ -43,7 +43,7 @@ class BackgroundForThumbsUp extends StatelessWidget {
               bottom: 0,
               child: Image.asset(
                 'assets/path_for_thumes_up.png',
-                width: 138g,
+                width: 138,
                 fit: BoxFit.cover,
               ),
             ),
