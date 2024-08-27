@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:new_flutter/second.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -159,11 +161,15 @@ class _CameraScreenState extends State<CameraScreen> {
                       onPressed: () async {
                         // 写真を撮る
                         final image = await _controller.takePicture();
+                        showProgressDialog(context);
+                        final pose = await _sendRequest(image);
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SecondPage(image: image)),
+                              builder: (context) =>
+                                  SecondPage(image: image, pose: pose)),
                         );
+                        Navigator.of(context, rootNavigator: true).pop();
 
                         // 撮影した写真を表示する画面に遷移
                         // await Navigator.of(context).push(
@@ -209,6 +215,25 @@ class _CameraScreenState extends State<CameraScreen> {
         ),
       ),
     );
+  }
+
+  Future<String> _sendRequest(XFile file) async {
+    final uri = Uri.parse('http://18.209.231.104:8000/predict');
+    final request = http.MultipartRequest('POST', uri)
+      ..headers['content-type'] = 'multipart/form-data'
+      ..headers['upgrade-insecure-requests'] = '1'
+      ..fields['Content-Disposition'] =
+          'form-data; name="file"; filename="good.jpg"'
+      ..files.add(await http.MultipartFile.fromPath('file', file.path));
+    final response = await http.Response.fromStream(await request.send());
+    if (response.statusCode == 200) {
+      debugPrint('Response: ${response.body}');
+      final responseData = json.decode(response.body);
+      return responseData['message'];
+    } else {
+      debugPrint('Error: ${response.reasonPhrase}');
+      return 'unknown';
+    }
   }
 }
 
@@ -260,4 +285,19 @@ class ShutterButton extends StatelessWidget {
       ),
     );
   }
+}
+
+void showProgressDialog(context) {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: false,
+    transitionDuration: Duration.zero, // これを入れると遅延を入れなくて
+    barrierColor: Colors.black.withOpacity(0.5),
+    pageBuilder: (BuildContext context, Animation animation,
+        Animation secondaryAnimation) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+  );
 }
