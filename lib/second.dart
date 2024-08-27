@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:new_flutter/frame.dart';
+import 'package:new_flutter/frame_good.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:new_flutter/background.dart';
+import 'package:new_flutter/background_good.dart';
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -164,6 +166,12 @@ class _SecondPageState extends State<SecondPage> {
       setState(() {
         pose = responseData['message'];
         // TODO: Frameをposeに応じて変更
+        if (pose == 'thumbs up') {
+          frame = FrameForThumbsUp(
+            Image(image: XFileImage(widget.image as XFile)),
+          );
+          background = BackgroundForThumbsUp(frame);
+        }
       });
     } else {
       debugPrint('Error: ${response.reasonPhrase}');
