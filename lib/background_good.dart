@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class NormalBackground extends StatelessWidget {
+class BackgroundForThumbsUp extends StatelessWidget {
   @override
   final Widget frame;
-  NormalBackground(this.frame);
+  BackgroundForThumbsUp(this.frame);
 
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -15,7 +15,7 @@ class NormalBackground extends StatelessWidget {
       var v = Container(
           width: constraints.maxWidth, height: 1.61, color: Colors.white);
       return Container(
-        color: Color(0xFFF2F3FE),
+        color: Color(0xFFFFF4D6),
         child: Stack(
           children: [
             ...List.generate(linesX,
@@ -23,21 +23,27 @@ class NormalBackground extends StatelessWidget {
             ...List.generate(linesY,
                 (index) => Positioned(top: index * gridSpace, child: v)),
             Positioned(
-                top: 10,
-                right: 5,
-                child: Transform.rotate(
-                    angle: 0.96,
-                    child: Image.asset(
-                      'assets/star.png',
-                      width: 85.19,
-                      fit: BoxFit.cover,
-                    ))),
+                top: 23.5,
+                right: 10,
+                child: Image.asset(
+                  'assets/thumes_up_icon.png',
+                  width: 50,
+                  fit: BoxFit.cover,
+                )),
+            Positioned(
+                top: 89,
+                right: 10,
+                child: Image.asset(
+                  'assets/star_blue.png',
+                  width: 32,
+                  fit: BoxFit.cover,
+                )),
             Positioned(
               left: 0,
               bottom: 0,
               child: Image.asset(
-                'assets/path.png',
-                width: 240,
+                'assets/path_for_thumes_up.png',
+                width: 138,
                 fit: BoxFit.cover,
               ),
             ),

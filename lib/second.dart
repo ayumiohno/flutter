@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:new_flutter/frame.dart';
+
 import 'package:new_flutter/frame3.dart';
+import 'package:new_flutter/background3.dart';
+
+import 'package:new_flutter/frame_good.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:new_flutter/background.dart';
-import 'package:new_flutter/background3.dart';
+import 'package:new_flutter/background_good.dart';
+
 import 'package:cross_file_image/cross_file_image.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -23,25 +28,25 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   final ScreenshotController screenshotController = ScreenshotController();
-  Widget shareFrame = ShareFrame(
+  Widget frame = NormalFrame(
     Image.asset('assets/image.png'),
   );
-  String pose = 'hello';
+  Widget background = NormalBackground(NormalFrame(Image.asset('assets/image.png')));
+  String pose = '';
 
   @override
   void initState() {
     super.initState();
+    frame = NormalFrame(
+      Image(image: XFileImage(widget.image as XFile)),
+    );
+    background = NormalBackground(frame);
     _sendRequest(widget.image as XFile);
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      if (widget.image != null) {
-        shareFrame = ShareFrame(
-          Image(image: XFileImage(widget.image as XFile)),
-        );
-      }
       return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -58,7 +63,7 @@ class _SecondPageState extends State<SecondPage> {
             children: [
               Container(
                 height: constraints.maxHeight * 0.74,
-                child: Background(shareFrame),
+                child: background,
               ),
               Container(
                 padding: EdgeInsets.symmetric(
@@ -117,7 +122,7 @@ class _SecondPageState extends State<SecondPage> {
   void _shareWidget() {
     screenshotController
         .captureFromWidget(
-      shareFrame,
+      frame,
     )
         .then((image) {
       if (image != null) {
@@ -142,7 +147,7 @@ class _SecondPageState extends State<SecondPage> {
   void _downloadWidget() {
     screenshotController
         .captureFromWidget(
-      shareFrame,
+      frame,
     )
         .then((image) {
       if (image != null) {
@@ -165,6 +170,13 @@ class _SecondPageState extends State<SecondPage> {
       final responseData = json.decode(response.body);
       setState(() {
         pose = responseData['message'];
+        // TODO: Frameをposeに応じて変更
+        if (pose == 'thumbs up') {
+          frame = FrameForThumbsUp(
+            Image(image: XFileImage(widget.image as XFile)),
+          );
+          background = BackgroundForThumbsUp(frame);
+        }
       });
     } else {
       debugPrint('Error: ${response.reasonPhrase}');

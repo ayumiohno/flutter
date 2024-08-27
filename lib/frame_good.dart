@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_flutter/product_info.dart';
 
-class NormalFrame extends StatelessWidget {
+class FrameForThumbsUp extends StatelessWidget {
   @override
   final Widget image;
-  NormalFrame(this.image);
+  FrameForThumbsUp(this.image);
 
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -38,21 +38,19 @@ class NormalFrame extends StatelessWidget {
                         )),
                   ),
                   Positioned(
-                    top: containerPadding * 0,
-                    left: containerPadding * 0,
+                    top: containerPadding * 0.03,
+                    right: containerPadding * 0.03,
                     child: Image.asset(
-                      'assets/icon2.png',
-                      width: 76,
-                      height: 78,
+                      'assets/thumes_up_character.png',
+                      width: 68,
                     ),
                   ),
                   Positioned(
                     bottom: containerPadding * 0.1,
-                    right: containerPadding * 0.1,
+                    left: containerPadding * 0.1,
                     child: Image.asset(
-                      'assets/icon1.png',
-                      width: 74,
-                      height: 78,
+                      'assets/family_character.png',
+                      width: 90.39,
                     ),
                   ),
                 ],
